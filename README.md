@@ -273,6 +273,10 @@ If you encounter any issues or have suggestions, please open an issue on the Git
 - ✅ Minimizable toolbar
 - ✅ Full-width bottom bar design
 
+### images
+<img width="1269" height="75" alt="image" src="https://github.com/user-attachments/assets/7a875476-69c5-4252-9d2d-67ad58935dfa" />
+
+
 ## Credits
 
 Built with:
@@ -283,3 +287,4 @@ Built with:
 ---
 
 **Monitor, analyze, and optimize your web performance!** ⚡🖥️
+
