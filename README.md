@@ -112,6 +112,10 @@ A powerful browser extension that displays a terminal-style performance bar at t
 - **Color-coded**: Red (>1s), Orange (>500ms), Green (<500ms)
 - **Clickable**: Opens detailed modal with top 5 slowest calls
 
+- ### how to show up in the browser
+<img width="1271" height="101" alt="2025-12-06 21_59_37-" src="https://github.com/user-attachments/assets/c5abb68b-6ede-4911-88f2-45edc8b5789b" />
+
+
 ## Files Structure
 
 ```
@@ -273,8 +277,6 @@ If you encounter any issues or have suggestions, please open an issue on the Git
 - ✅ Minimizable toolbar
 - ✅ Full-width bottom bar design
 
-### images
-<img width="1271" height="101" alt="2025-12-06 21_59_37-" src="https://github.com/user-attachments/assets/c5abb68b-6ede-4911-88f2-45edc8b5789b" />
 
 ## Credits
 
@@ -286,5 +288,6 @@ Built with:
 ---
 
 **Monitor, analyze, and optimize your web performance!** ⚡🖥️
+
 
 
