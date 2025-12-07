@@ -274,8 +274,7 @@ If you encounter any issues or have suggestions, please open an issue on the Git
 - ✅ Full-width bottom bar design
 
 ### images
-<img width="1269" height="75" alt="image" src="https://github.com/user-attachments/assets/7a875476-69c5-4252-9d2d-67ad58935dfa" />
-
+<img width="1271" height="101" alt="2025-12-06 21_59_37-" src="https://github.com/user-attachments/assets/c5abb68b-6ede-4911-88f2-45edc8b5789b" />
 
 ## Credits
 
@@ -287,4 +286,5 @@ Built with:
 ---
 
 **Monitor, analyze, and optimize your web performance!** ⚡🖥️
+
 
