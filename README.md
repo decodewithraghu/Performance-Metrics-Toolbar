@@ -1,6 +1,6 @@
 # Performance Metrics Toolbar
 
-A powerful browser extension that displays a terminal-style performance bar at the bottom of every webpage, tracking real-time metrics with a focus on API/XHR performance analysis.
+A powerful browser extension that displays a terminal-style performance bar at the bottom of every webpage, tracking real-time metrics with a focus on API/XHR performance analysis. **Fully supports Single Page Applications (SPAs)** with automatic route change detection.
 
 ## Features
 
@@ -23,6 +23,23 @@ A powerful browser extension that displays a terminal-style performance bar at t
   - API/XHR Call Count
   - Total Data Transferred
   - **Slowest API Call** with color-coded performance indicator
+
+### 🚀 Single Page Application (SPA) Support
+
+The extension **automatically detects and monitors** route changes in SPAs built with:
+- React Router
+- Vue Router
+- Angular Router
+- Any framework using History API
+- Hash-based routing (#/path)
+
+**How it works:**
+- Monitors `pushState`, `replaceState`, and `popstate` events
+- Detects hash changes (`hashchange` events)
+- Polls for URL changes (fallback for custom routing)
+- Observes DOM mutations to catch navigation changes
+- Updates metrics automatically on each route change
+- Shows navigation counter in toolbar title (e.g., "Nav: 3")
 
 ### 🔍 Advanced Features
 
@@ -49,9 +66,10 @@ A powerful browser extension that displays a terminal-style performance bar at t
 ### 🎨 User Experience
 - **Always Visible**: Fixed at bottom of screen
 - **Non-intrusive**: Doesn't interfere with page interactions
-- **Minimizable**: Collapse to just the header with + button
-- **Auto-updating**: FPS updates continuously, metrics refresh on page events
-- **Double-click to refresh**: Manually refresh all metrics anytime
+- **Minimizable**: Collapse to just the header with − button
+- **Auto-updating**: FPS updates continuously, metrics refresh on page events and SPA navigations
+- **Manual refresh**: Click the ↻ button or double-click toolbar to refresh metrics
+- **SPA-aware**: Automatically updates on route changes
 
 ## Installation
 
@@ -80,14 +98,16 @@ A powerful browser extension that displays a terminal-style performance bar at t
 
 ## Usage
 
-1. Once installed, visit any webpage
+1. Once installed, visit any webpage (including SPAs like React, Vue, or Angular apps)
 2. The performance toolbar will automatically appear as a **terminal-style bar at the bottom** of the page
 3. **View metrics** at a glance with yellow labels and green values
 4. **Minimize/Maximize** by clicking the − / + button in the top-right
-5. **Refresh metrics** by double-clicking anywhere on the toolbar
-6. **Click "Slowest Call"** to see detailed breakdown of top 5 slowest XHR/API calls
-7. **Click "↓ HAR"** to download a HAR file with all XHR/API performance data
-8. **Monitor FPS** in real-time with color-coded performance (green ≥50fps, yellow ≥30fps, red <30fps)
+5. **Refresh metrics** by clicking the ↻ button or double-clicking anywhere on the toolbar
+6. **Navigate in SPAs**: Metrics update automatically when you navigate between routes
+7. **Click "Slowest Call"** to see detailed breakdown of top 5 slowest XHR/API calls
+8. **Click "↓ HAR"** to download a HAR file with all XHR/API performance data
+9. **Monitor FPS** in real-time with color-coded performance (green ≥50fps, yellow ≥30fps, red <30fps)
+10. **Track navigations**: The toolbar title shows how many route changes have occurred (e.g., "Nav: 3")
 
 ## Metrics Explained
 

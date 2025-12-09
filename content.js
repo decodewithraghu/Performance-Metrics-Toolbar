@@ -12,6 +12,9 @@ class PerformanceToolbar {
     this.yOffset = 0;
     this.isMinimized = false;
     this.slowCalls = [];
+    this.lastUrl = location.href;
+    this.observer = null;
+    this.navigationCount = 0;
     
     this.init();
   }
@@ -28,6 +31,84 @@ class PerformanceToolbar {
     window.addEventListener('load', () => {
       setTimeout(() => this.updateMetrics(), 100);
     });
+    
+    // Monitor for SPA navigation changes
+    this.setupSPAMonitoring();
+  }
+
+  setupSPAMonitoring() {
+    // Monitor History API (pushState, replaceState, popstate)
+    const originalPushState = history.pushState;
+    const originalReplaceState = history.replaceState;
+    const self = this;
+    
+    history.pushState = function() {
+      originalPushState.apply(this, arguments);
+      self.onRouteChange();
+    };
+    
+    history.replaceState = function() {
+      originalReplaceState.apply(this, arguments);
+      self.onRouteChange();
+    };
+    
+    window.addEventListener('popstate', () => {
+      this.onRouteChange();
+    });
+    
+    // Monitor hash changes
+    window.addEventListener('hashchange', () => {
+      this.onRouteChange();
+    });
+    
+    // Fallback: Poll for URL changes (for frameworks that don't use standard APIs)
+    setInterval(() => {
+      if (location.href !== this.lastUrl) {
+        this.lastUrl = location.href;
+        this.onRouteChange();
+      }
+    }, 500);
+    
+    // Monitor DOM changes that might indicate navigation
+    this.observer = new MutationObserver(() => {
+      if (location.href !== this.lastUrl) {
+        this.lastUrl = location.href;
+        this.onRouteChange();
+      }
+    });
+    
+    this.observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  onRouteChange() {
+    this.navigationCount++;
+    console.log(`🔄 SPA Navigation detected (#${this.navigationCount}): ${location.href}`);
+    
+    // Clear existing performance entries for the new navigation
+    if (performance.clearResourceTimings) {
+      performance.clearResourceTimings();
+    }
+    
+    // Update metrics after a short delay to allow API calls to complete
+    setTimeout(() => {
+      this.updateMetrics();
+      this.updateToolbarTitle();
+    }, 1000);
+    
+    // Update again after more time for lazy-loaded content
+    setTimeout(() => {
+      this.updateMetrics();
+    }, 3000);
+  }
+
+  updateToolbarTitle() {
+    const titleElement = this.toolbar.querySelector('.perf-toolbar-title');
+    if (titleElement) {
+      titleElement.textContent = `▸ Performance Metrics (Nav: ${this.navigationCount})`;
+    }
   }
 
   createToolbar() {
@@ -42,6 +123,7 @@ class PerformanceToolbar {
     header.innerHTML = `
       <span class="perf-toolbar-title">▸ Performance Metrics</span>
       <div style="display: flex; gap: 8px; align-items: center;">
+        <button class="perf-toolbar-refresh" title="Refresh Metrics">↻</button>
         <button class="perf-toolbar-download" title="Download HAR File">↓ HAR</button>
         <button class="perf-toolbar-minimize" title="Minimize">−</button>
       </div>
@@ -129,13 +211,22 @@ class PerformanceToolbar {
     const minimizeBtn = this.toolbar.querySelector('.perf-toolbar-minimize');
     minimizeBtn.addEventListener('click', () => this.toggleMinimize());
     
+    // Refresh functionality
+    const refreshBtn = this.toolbar.querySelector('.perf-toolbar-refresh');
+    refreshBtn.addEventListener('click', () => {
+      console.log('🔄 Manual refresh triggered');
+      this.updateMetrics();
+    });
+    
     // Download HAR functionality
     const downloadBtn = this.toolbar.querySelector('.perf-toolbar-download');
     downloadBtn.addEventListener('click', () => this.downloadHAR());
     
-    // Refresh metrics on click
+    // Refresh metrics on double-click
     this.toolbar.addEventListener('dblclick', (e) => {
-      if (!e.target.classList.contains('perf-toolbar-minimize')) {
+      if (!e.target.classList.contains('perf-toolbar-minimize') && 
+          !e.target.classList.contains('perf-toolbar-download') &&
+          !e.target.classList.contains('perf-toolbar-refresh')) {
         this.updateMetrics();
       }
     });
@@ -197,6 +288,7 @@ class PerformanceToolbar {
     const timing = performance.timing;
     const navigation = performance.getEntriesByType('navigation')[0];
     
+    // For SPAs, DNS/TCP/SSL might be 0 after first load
     // DNS Lookup Time
     const dnsTime = timing.domainLookupEnd - timing.domainLookupStart;
     document.getElementById('perf-dns').textContent = 

@@ -78,6 +78,35 @@
   letter-spacing: 0.5px;
 }
 
+.perf-toolbar-refresh {
+  background: #1a1a1a;
+  border: 1px solid #00ffff;
+  color: #00ffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  padding: 0;
+}
+
+.perf-toolbar-refresh:hover {
+  background: #00ffff;
+  color: #000000;
+  transform: scale(1.05) rotate(180deg);
+}
+
+.perf-toolbar-refresh:active {
+  transform: scale(0.95) rotate(180deg);
+}
+
 .perf-toolbar-download:hover {
   background: #ffff00;
   color: #000000;
