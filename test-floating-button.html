@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Floating Button Design</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: white;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 60px;
+      opacity: 0.9;
+    }
+
+    .info-box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .info-box h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #ffeb3b;
+    }
+
+    .info-box p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #ffeb3b;
+    }
+
+    .feature-card p {
+      line-height: 1.6;
+    }
+
+    .instructions {
+      background: rgba(255, 235, 59, 0.1);
+      border-left: 4px solid #ffeb3b;
+      padding: 20px 30px;
+      margin: 30px 0;
+      border-radius: 8px;
+    }
+
+    .instructions h3 {
+      color: #ffeb3b;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .instructions ol {
+      margin-left: 20px;
+      line-height: 2;
+    }
+
+    .instructions li {
+      font-size: 1.1rem;
+    }
+
+    .visual-demo {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 40px 0;
+      flex-wrap: wrap;
+    }
+
+    .demo-box {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      min-width: 300px;
+    }
+
+    .demo-box h4 {
+      color: #ffeb3b;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    .mock-button {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      border: 3px solid #00ff00;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin: 20px auto;
+      box-shadow: 0 4px 15px rgba(0, 255, 0, 0.4);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 4px 15px rgba(0, 255, 0, 0.4);
+      }
+      50% {
+        box-shadow: 0 6px 25px rgba(0, 255, 0, 0.8);
+      }
+    }
+
+    .mock-panel {
+      width: 400px;
+      max-width: 100%;
+      background: #000;
+      border: 2px solid #00ff00;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+      text-align: left;
+    }
+
+    .mock-panel-header {
+      color: #ffff00;
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .mock-metric {
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      margin: 8px 0;
+      font-size: 0.9rem;
+    }
+
+    .highlight {
+      background: rgba(255, 235, 59, 0.2);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+
+    .emoji-large {
+      font-size: 3rem;
+      display: block;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+      }
+
+      .info-box {
+        padding: 25px;
+      }
+
+      .visual-demo {
+        flex-direction: column;
+      }
+
+      .mock-panel {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎉 Performance Metrics Toolbar</h1>
+    <div class="subtitle">New Floating Button Design (v3.0)</div>
+
+    <div class="info-box">
+      <h2>✨ What Changed?</h2>
+      <p>
+        The toolbar has been redesigned from a <span class="highlight">full-width bottom bar</span> 
+        to a <span class="highlight">non-intrusive floating button</span> that expands on demand.
+      </p>
+      <p>
+        <strong>Why?</strong> The previous design felt "overwhelming" and covered the entire bottom 
+        of the page. Now it's a tiny button that only shows metrics when you need them!
+      </p>
+    </div>
+
+    <div class="visual-demo">
+      <div class="demo-box">
+        <h4>Collapsed (Default)</h4>
+        <div class="mock-button">📊</div>
+        <p>60×60px floating button</p>
+        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">
+          Bottom-right corner<br>
+          Click to expand
+        </p>
+      </div>
+
+      <div class="demo-box">
+        <h4>Expanded (On Click)</h4>
+        <div class="mock-panel">
+          <div class="mock-panel-header">▸ Performance Metrics</div>
+          <div class="mock-metric">Load Time: 2.5s</div>
+          <div class="mock-metric">API Calls: 8</div>
+          <div class="mock-metric">Resources: 42</div>
+          <div class="mock-metric">FPS: 60</div>
+          <div class="mock-metric">Memory: 45MB</div>
+        </div>
+        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">
+          550px panel<br>
+          All metrics visible
+        </p>
+      </div>
+    </div>
+
+    <div class="instructions">
+      <h3>📋 How to Test</h3>
+      <ol>
+        <li>Open <code>chrome://extensions</code> in your browser</li>
+        <li>Find "Performance Metrics Toolbar" extension</li>
+        <li>Click the "Reload" button (🔄)</li>
+        <li>Refresh this page (or any webpage)</li>
+        <li>Look for the floating <span class="emoji-large" style="display: inline; font-size: 1.5rem;">📊</span> button in the <strong>bottom-right corner</strong></li>
+        <li>Click the button to expand and see all metrics</li>
+        <li>Click again (or press Ctrl+Shift+P) to collapse</li>
+      </ol>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>🎯 Non-Intrusive</h3>
+        <p>
+          Only 60×60 pixels when collapsed. Doesn't cover your page content or 
+          distract from your work. Shows up only in the corner.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>⚡ On-Demand</h3>
+        <p>
+          Click to expand when you need metrics. No more constant bottom bar 
+          taking up screen space. You control when to view performance data.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>✨ Smooth Animations</h3>
+        <p>
+          Beautiful expand/collapse animations (0.3s). Hover effects show 
+          interactivity. Professional appearance with glowing effects.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>📱 Responsive</h3>
+        <p>
+          Works perfectly on desktop, tablet, and mobile. Adapts to screen 
+          size automatically. 50px button on mobile devices.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>⌨️ Keyboard Shortcuts</h3>
+        <p>
+          Press <code>Ctrl+Shift+P</code> to toggle expand/collapse. 
+          All previous shortcuts still work. Fully keyboard accessible.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>🛡️ All Features Intact</h3>
+        <p>
+          Same powerful metrics, tab organization, error reporting, and 
+          compatibility checking. Just better UX!
+        </p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h2>🚀 Benefits</h2>
+      <p>✅ <strong>95% less screen space</strong> when collapsed (60px vs full width)</p>
+      <p>✅ <strong>Zero page obstruction</strong> by default</p>
+      <p>✅ <strong>User-controlled visibility</strong> - expand when needed</p>
+      <p>✅ <strong>Professional appearance</strong> - modern floating button design</p>
+      <p>✅ <strong>Better focus</strong> - less distraction, more productivity</p>
+      <p>✅ <strong>Maintains all functionality</strong> - nothing removed, just better UX</p>
+    </div>
+
+    <div class="info-box">
+      <h2>📚 Documentation</h2>
+      <p>📖 <strong>Complete Design Guide:</strong> <code>docs/FLOATING_BUTTON_DESIGN.md</code></p>
+      <p>📊 <strong>Redesign Summary:</strong> <code>docs/UI_UX_REDESIGN_SUMMARY.md</code></p>
+      <p>📋 <strong>Index:</strong> <code>docs/INDEX.md</code></p>
+      <p>📘 <strong>README:</strong> <code>README.md</code></p>
+    </div>
+
+    <div style="text-align: center; margin: 60px 0 20px 0; font-size: 1.2rem;">
+      <p>🎉 <strong>Enjoy the new non-intrusive design!</strong> 🎉</p>
+      <p style="opacity: 0.8; margin-top: 15px; font-size: 0.9rem;">
+        Feedback? Click the 🐛 button in the toolbar to report any issues.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

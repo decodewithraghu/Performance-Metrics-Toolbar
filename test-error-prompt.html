@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Auto-Prompt Error Notification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    button {
+      background: #4a90e2;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px;
+    }
+    
+    button:hover {
+      background: #357abd;
+    }
+    
+    button.danger {
+      background: #e74c3c;
+    }
+    
+    button.danger:hover {
+      background: #c0392b;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    h2 {
+      color: #4a90e2;
+      margin-top: 0;
+    }
+    
+    .info {
+      background: #e3f2fd;
+      padding: 10px;
+      border-left: 4px solid #2196f3;
+      margin: 10px 0;
+    }
+    
+    .status {
+      font-family: 'Courier New', monospace;
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐛 Auto-Prompt Error Notification Test</h1>
+  
+  <div class="info">
+    <strong>Note:</strong> This test page simulates errors to test the auto-prompt notification system. 
+    Load this page with the Performance Metrics Toolbar extension installed.
+  </div>
+
+  <div class="test-section">
+    <h2>Test 1: Trigger Single Error</h2>
+    <p>Click to trigger a test error. A notification should appear in the bottom-right corner within 1-2 seconds.</p>
+    <button id="test1">Trigger Test Error</button>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 2: Cooldown Test</h2>
+    <p>Click multiple times rapidly. Only one notification should appear per 30 seconds (cooldown).</p>
+    <button id="test2">Trigger Multiple Errors</button>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 3: Promise Rejection</h2>
+    <p>Trigger an unhandled promise rejection (async error).</p>
+    <button id="test3">Trigger Promise Rejection</button>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 4: TypeError</h2>
+    <p>Trigger a common TypeError (accessing undefined property).</p>
+    <button id="test4">Trigger TypeError</button>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 5: Disable Auto-Prompt</h2>
+    <p>Disable the auto-prompt feature. Errors will still be captured but won't show notifications.</p>
+    <button id="disable">Disable Auto-Prompt</button>
+    <button id="enable">Enable Auto-Prompt</button>
+    <div class="status" id="status">Status: <span id="statusText">Loading...</span></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Test 6: Check Auto-Prompt Status</h2>
+    <p>View the current status of the auto-prompt system.</p>
+    <button id="checkStatus">Check Status</button>
+    <pre class="status" id="statusInfo">Click "Check Status" to see details</pre>
+  </div>
+
+  <script>
+    // Test 1: Single error
+    document.getElementById('test1').addEventListener('click', () => {
+      try {
+        throw new Error('Test Error: Single error triggered for testing auto-prompt notification');
+      } catch (e) {
+        // Error will be caught by the extension
+        throw e;
+      }
+    });
+
+    // Test 2: Multiple errors (cooldown test)
+    document.getElementById('test2').addEventListener('click', () => {
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          try {
+            throw new Error(`Test Error ${i + 1}: Cooldown test error`);
+          } catch (e) {
+            throw e;
+          }
+        }, i * 500);
+      }
+    });
+
+    // Test 3: Promise rejection
+    document.getElementById('test3').addEventListener('click', () => {
+      Promise.reject(new Error('Test Error: Unhandled promise rejection'));
+    });
+
+    // Test 4: TypeError
+    document.getElementById('test4').addEventListener('click', () => {
+      const obj = null;
+      console.log(obj.property); // This will throw TypeError
+    });
+
+    // Test 5: Disable/Enable
+    document.getElementById('disable').addEventListener('click', () => {
+      if (typeof ErrorReporter !== 'undefined') {
+        ErrorReporter.setAutoPrompt(false);
+        updateStatus();
+        alert('Auto-prompt disabled. Errors will still be captured but won\'t show notifications.');
+      } else {
+        alert('ErrorReporter not found. Make sure the extension is installed and active.');
+      }
+    });
+
+    document.getElementById('enable').addEventListener('click', () => {
+      if (typeof ErrorReporter !== 'undefined') {
+        ErrorReporter.setAutoPrompt(true);
+        updateStatus();
+        alert('Auto-prompt enabled. Notifications will appear when errors occur.');
+      } else {
+        alert('ErrorReporter not found. Make sure the extension is installed and active.');
+      }
+    });
+
+    // Test 6: Check status
+    document.getElementById('checkStatus').addEventListener('click', () => {
+      if (typeof ErrorReporter !== 'undefined') {
+        const status = ErrorReporter.getAutoPromptStatus();
+        const nextAvailable = new Date(status.nextPromptAvailable);
+        const now = Date.now();
+        const canPromptNow = now >= status.nextPromptAvailable;
+        
+        document.getElementById('statusInfo').textContent = JSON.stringify({
+          enabled: status.enabled,
+          lastPromptTime: new Date(status.lastPromptTime).toLocaleString(),
+          promptCooldown: status.promptCooldown + 'ms (' + (status.promptCooldown / 1000) + 's)',
+          nextPromptAvailable: nextAvailable.toLocaleString(),
+          canPromptNow: canPromptNow,
+          waitTime: canPromptNow ? '0s' : Math.ceil((status.nextPromptAvailable - now) / 1000) + 's'
+        }, null, 2);
+      } else {
+        document.getElementById('statusInfo').textContent = 'ErrorReporter not found. Extension may not be loaded.';
+      }
+    });
+
+    // Update status display
+    function updateStatus() {
+      if (typeof ErrorReporter !== 'undefined') {
+        const status = ErrorReporter.getAutoPromptStatus();
+        document.getElementById('statusText').textContent = status.enabled ? 
+          '✅ Enabled' : '❌ Disabled';
+      } else {
+        document.getElementById('statusText').textContent = '⚠️ Extension Not Loaded';
+      }
+    }
+
+    // Check status on load
+    setTimeout(updateStatus, 1000);
+    
+    // Refresh status every 5 seconds
+    setInterval(updateStatus, 5000);
+  </script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Performance Metrics Toolbar",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "Display a floating toolbar with real-time performance metrics on every page",
   "permissions": [
     "activeTab"
@@ -9,8 +9,16 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["toolbar.css"],
+      "js": [
+        "src/js/config.js",
+        "src/js/utils.js",
+        "src/js/metrics-calculator.js",
+        "src/js/lifecycle-manager.js",
+        "src/js/error-reporter.js",
+        "src/js/compatibility-checker.js",
+        "src/js/content.js"
+      ],
+      "css": ["src/css/toolbar.css"],
       "run_at": "document_idle"
     }
   ]

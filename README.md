@@ -1,8 +1,27 @@
 # Performance Metrics Toolbar
 
-A powerful browser extension that displays a terminal-style performance bar at the bottom of every webpage, tracking real-time metrics with a focus on API/XHR performance analysis. **Fully supports Single Page Applications (SPAs)** with automatic route change detection.
+A powerful browser extension with a **non-intrusive floating button** that expands to show performance metrics on demand. Track real-time metrics with focus on API/XHR performance. **Fully supports Single Page Applications (SPAs)** with automatic route change detection.
 
-## Features
+## ✨ Key Features
+
+### 🎯 Non-Intrusive Floating Design (v3.0)
+- **Floating Button** - Small circular button in bottom-right corner (60px)
+- **Expand on Click** - Click 📊 to see full metrics panel
+- **Collapse Anytime** - Click again to minimize back to button
+- **No Page Obstruction** - Only shows when you need it
+
+### �️ Enterprise-Grade Reliability
+- **Graceful Shutdown** - Automatic cleanup prevents memory leaks
+- **Error Reporting** - Automatic error notifications + easy bug reporting via email or GitHub (🐛 button)
+- **Auto-Prompt Notifications** - Get notified when errors occur with options to report, defer, or dismiss
+- **Compatibility Checker** - Verify SPA/PWA compatibility (🔍 button)
+
+### �📊 Smart Tabbed Interface
+Metrics are organized into intuitive tabs preventing horizontal scrolling:
+- **📊 Overview** - Load time, API calls, FPS, slowest call
+- **⏱️ Timing** - DOM Ready, TTFB, Content Transfer
+- **🌐 Network** - DNS, TCP, SSL, Data transferred
+- **💾 Memory/FPS** - Heap usage, FPS counter
 
 ### 🎯 Core Performance Metrics
 - **Server-Side Timings**:
@@ -41,34 +60,64 @@ The extension **automatically detects and monitors** route changes in SPAs built
 - Updates metrics automatically on each route change
 - Shows navigation counter in toolbar title (e.g., "Nav: 3")
 
-### 🔍 Advanced Features
+**Supported Frameworks:**
+- ✅ React (React Router)
+- ✅ Vue (Vue Router)
+- ✅ Angular (Angular Router)
+- ✅ Ember, Svelte, Backbone
+- ✅ Any framework using History API or hash routing
 
-- **Interactive Slowest Call Analysis**: Click the "Slowest Call" metric to view detailed breakdown of the top 5 slowest XHR/API calls including:
-  - Full URL and domain
-  - Total duration (color-coded: 🟢 <500ms, 🟠 >500ms, 🔴 >1000ms)
-  - Time to First Byte (TTFB)
-  - Download time
-  - Transfer size
-  - DNS, TCP, and SSL timings
-  - Request type
+### 📦 Progressive Web App (PWA) Compatible
 
-- **HAR File Export**: Download complete network performance data for XHR/API calls only
-  - Click the "↓ HAR" button in the toolbar
-  - Import into Chrome DevTools, WebPageTest, or other performance tools
-  - Perfect for sharing performance data or archiving snapshots
+Full support for Progressive Web Apps:
+- Detects Service Workers
+- Works in standalone mode
+- Monitors installed PWAs
+- Accounts for caching effects
+- Click **🔍** button to check compatibility
 
-- **Terminal-Style UI**:
-  - Black background with yellow/green text for maximum readability
-  - Monospace font (Consolas/Monaco)
-  - Full-width bottom bar design
-  - Minimizable to save screen space
+### 🔍 Professional Modal Interface
+
+**List View Table** - See all slow API calls at a glance
+- Sortable table with: Endpoint, Duration, TTFB, Download, Size, Type
+- Color-coded status indicators (🟢 fast, 🟠 medium, 🔴 slow)
+- Hover effects for better usability
+- Click any row for detailed analysis
+
+**Detailed View** - Deep dive into individual API calls
+- Performance classification with visual indicators
+- Timing breakdown (Total, TTFB, Download)
+- Connection metrics (DNS, TCP, SSL)
+- Full URL and domain information
+- Organized in grouped sections for clarity
+
+### ⌨️ Keyboard Shortcuts
+- `Ctrl+Shift+P` - Toggle minimize
+- `Ctrl+Shift+R` - Refresh metrics
+- `Ctrl+Shift+E` - Export HAR file
+- `Ctrl+Shift+?` - Show keyboard help
+
+### 🎨 Professional UI/UX
+- **Responsive Design** - Optimized for desktop, tablet, and mobile
+- **Color-Coded Metrics** - Visual hierarchy with category-based colors
+- **Smooth Animations** - Fade transitions and hover effects
+- **Accessibility** - Aria labels, keyboard navigation, better contrast
+- **Dark Mode** - Eye-friendly terminal aesthetic
+- **Tooltips** - Helpful descriptions on hover
+
+### 🎨 Terminal-Style UI
+- Black background with yellow/green text for maximum readability
+- Monospace font (Consolas/Monaco)
+- Professional bottom bar design
+- Minimizable to save screen space
+- Mobile-optimized layout at top of page
 
 ### 🎨 User Experience
-- **Always Visible**: Fixed at bottom of screen
+- **Always Visible**: Fixed at bottom of screen (top on mobile)
 - **Non-intrusive**: Doesn't interfere with page interactions
 - **Minimizable**: Collapse to just the header with − button
 - **Auto-updating**: FPS updates continuously, metrics refresh on page events and SPA navigations
-- **Manual refresh**: Click the ↻ button or double-click toolbar to refresh metrics
+- **Manual refresh**: Click the ↻ button, double-click toolbar, or press Ctrl+Shift+R
 - **SPA-aware**: Automatically updates on route changes
 
 ## Installation
@@ -297,6 +346,21 @@ If you encounter any issues or have suggestions, please open an issue on the Git
 - ✅ Minimizable toolbar
 - ✅ Full-width bottom bar design
 
+## 📚 Documentation
+
+### Project Structure
+See **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** for complete architecture details, design patterns, and code organization.
+
+### Detailed Documentation
+For detailed information, see the [docs](docs/) folder:
+- **[INDEX.md](docs/INDEX.md)** - Complete documentation index and navigation
+- **[CHANGELOG.md](docs/CHANGELOG.md)** - Version history and changes
+- **[IMPLEMENTATION_SUMMARY.md](docs/IMPLEMENTATION_SUMMARY.md)** - Technical implementation details
+- **[UI_UX_IMPROVEMENTS.md](docs/UI_UX_IMPROVEMENTS.md)** - UI/UX analysis and recommendations
+- **[VISUAL_PREVIEW.md](docs/VISUAL_PREVIEW.md)** - Visual mockups and design system
+
+### Source Code
+See **[src/README.md](src/README.md)** for module architecture and design patterns applied.
 
 ## Credits
 
